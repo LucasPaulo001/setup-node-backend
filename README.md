@@ -4,7 +4,7 @@ Este repositório contém um script de configuração automatizada para configur
 
 ## Descrição
 
-O `setup-backend.sh` configura o ambiente do backend, criando diretórios essenciais e arquivos de configuração, além de instalar as dependências necessárias para começar a desenvolver uma aplicação backend em Node.js.
+O `setup.sh` configura o ambiente do backend, criando diretórios essenciais e arquivos de configuração, além de instalar as dependências necessárias para começar a desenvolver uma aplicação backend em Node.js.
 
 ## Funcionalidade
 
