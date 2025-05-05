@@ -1,8 +1,7 @@
 #!/bin/bash
 
-SCRIPT_DIR=$(dirname "$0")
-PROJECT_ROOT="$SCRIPT_DIR/../../backend"
-cd "$PROJECT_ROOT" || exit
+mkdir -p backend/src/routes backend/src/settings/database
+cd backend || exit
 
 # Configuração do npm
 echo "Deseja rodar 'npm init' (interativo) ou 'npm init -y' (padrão)?"
