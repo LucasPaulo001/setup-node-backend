@@ -1,20 +1,8 @@
 #!/bin/bash
 
-# Criando diretórios
-mkdir -p backend/src/{routes,models,middlewares,controllers,settings/database}
-
-cd backend
-
-# Configurando o .gitignore
-cat <<EOF > .gitignore
-node_modules
-.env
-EOF
-
-# Criando o .env
-cat <<EOF > .env
-PORT=8080
-EOF
+SCRIPT_DIR=$(dirname "$0")
+PROJECT_ROOT="$SCRIPT_DIR/../../backend"
+cd "$PROJECT_ROOT" || exit
 
 # Configuração do npm
 echo "Deseja rodar 'npm init' (interativo) ou 'npm init -y' (padrão)?"
@@ -26,19 +14,17 @@ if [ "$init_choice" = "1" ]; then
     npm init
 else 
     npm init -y
-    # O padrão será CommonJS, então não adicionamos a chave "type" no package.json
-    echo "Mantido como CommonJS (sem 'type: module')"
 fi
 
 # Tipo de módulo - Só pergunta se não for 'npm init -y'
 if [ "$init_choice" = "1" ]; then
-    echo "Deseja o ESmodules (type: module) ou o CommonJs (padrão)?"
+    echo "[Revisão de módulo]: Deseja o ESmodules (type: module) ou o CommonJs (padrão)?"
     echo "1) ESmodules"
     echo "2) CommonJs"
     read -p "Escolha [1/2]: " module_choice
 
-    # Verifica se o arquivo package.json existe
-    if [ -f "package.json" ]; then
+# Verifica se o arquivo package.json existe
+if [ -f "package.json" ]; then
         # Se a escolha for ESModules
         if [ "$module_choice" = "1" ]; then
             # Adiciona "type": "module" ao package.json
@@ -59,9 +45,16 @@ if [ "$init_choice" = "1" ]; then
     fi
 fi
 
+#Configuração de banco de dados
+echo -e "\nEscolha o banco de dados:\n"
+echo "1) MongoDB"
+echo "2) Nenhum"
+read -p "Escolha[1/2]: " db_choice
+
+cd src || exit
 # Configurações de servidor (app.js) - ESmodules
 if [ "$init_choice" = "1" ] && [ "$module_choice" = "1" ]; then
-    cd src
+    
     cat <<EOF > app.mjs
 // Importando módulos
 import express from "express";
@@ -78,9 +71,6 @@ dotenv.config();
 app.use(express.json());
 app.use(express.urlencoded({extended: true}));
 
-// Conexão do banco de dados
-    //...
-
 // Configuração de rotas
    import router from "./routes/Router.mjs";
    app.use(router);
@@ -92,8 +82,8 @@ app.listen(PORT, () => {
 })
 EOF
 
-#Configuração inicial de rotas
-cd routes
+#Configuração inicial de rotas (ES Modules)
+cd routes || exit
 cat <<EOF > Router.mjs
 
 //Importando módulos
@@ -115,20 +105,45 @@ router.get("/", (req, res) => {
 export default router;
 EOF
 
-# Criando arquivos base
-cd ..
-cd settings/database
+#Configuração de banco de dados MongoDB
+if [ "$db_choice" = "1" ]; then
+
+    #Instalação de biblioteca
+    npm i mongoose
+
+#Configuração do arquivo
+cd ../settings/database || exit
 cat << EOF > dbConnection.mjs
-//Configuração de conexão com o banco de dados aqui...
+//Config do banco de dados
+
+import mongoose from "mongoose";
+
+const dbConnection = async (app) => {
+    try{
+        //mongoose.connect(<url de conxão aqui>);
+        //console.log("Conectado ao mongoose...");
+    }
+    catch(error){
+        console.log(error)
+    }
+}
+
+export default dbConnection;
+
 EOF
 
-#Voltando para a raiz do projeto
-    cd ..
-    cd ..
-    cd ..
+# Volta para src
+    cd ../../
+
+    # Insere o import e chamada da função no app.mjs
+    sed -i '/dotenv.config();/a\\nimport connectToDatabase from "./settings/database/dbConnection.mjs";\nconnectToDatabase(app);\n' app.mjs
+else
+    echo -e "\nNenhum banco adicionado..."
+
+fi
+
 else
     # Configurações de servidor (app.js) - CommonJS
-    cd src
     cat <<EOF > app.js
 // Importando módulos
 const express = require("express");
@@ -145,9 +160,6 @@ dotenv.config();
 app.use(express.json());
 app.use(express.urlencoded({extended: true}));
 
-// Conexão do banco de dados
-    //...
-
 // Configuração de rotas
     const router = require("./routes/Router.js");
     app.use(router);
@@ -159,7 +171,7 @@ app.listen(PORT, () => {
 });
 EOF
 
-#Configuração inicial de rotas
+#Configuração inicial de rotas (CommonJs)
 cd routes
 cat <<EOF > Router.js
 
@@ -182,32 +194,45 @@ router.get("/", (req, res) => {
 module.exports = router;
 EOF
 
-# Criando arquivos base
-cd ..
-cd settings/database
+#Configuração de banco de dados MongoDB
+if [ "$db_choice" = "1" ]; then
+
+    #Instalação de biblioteca
+    npm i mongoose
+
+#Configuração do arquivo
+cd ../settings/database || exit
 cat << EOF > dbConnection.js
-//Configuração de conexão com o banco de dados aqui...
+//Config do banco de dados
+
+const mongoose = require("mongoose");
+
+const dbConnection = async (app) => {
+    try{
+        //mongoose.connect(<url de conxão aqui>);
+        //console.log("Conectado ao mongoose...");
+    }
+    catch(error){
+        console.log(error)
+    }
+}
+
+module.exports = dbConnection;
+
 EOF
 
-#Voltando para a raiz do projeto
-    cd ..
-    cd ..
-    cd ..
-    echo "Mantido como CommonJs (sem 'type: module')"
+# Volta para src
+    cd ../../
+
+    # Insere o import e chamada da função no app.mjs
+    sed -i '/dotenv.config();/a\\nconst connectToDatabase = require("./settings/database/dbConnection.js");\nconnectToDatabase(app);\n' app.js
+
+else
+    echo -e "\nNenhum banco adicionado..."
+
 fi
 
-# Instalando as dependências bases
-npm i express cors dotenv
-npm i nodemon --save-dev
 
-echo -e "\n--------Projeto base criado com sucesso!--------\n"
-echo -e "\n 
-╭━━╮╱╱╱╱╱╭╮╱╱╱╱╱╱╱╱╱╱╱╱╱╱╭━━━╮╱╱╱╱╱╭╮╱╱╱╭━━━┳━━━╮╭╮
-┃╭╮┃╱╱╱╱╱┃┃╱╱╱╱╱╱╱╱╱╱╱╱╱╱┃╭━╮┃╱╱╱╱╱┃┃╱╱╱┃╭━╮┃╭━╮┣╯┃
-┃╰╯╰┳╮╱╭╮┃┃╱╱╭╮╭┳━━┳━━┳━━┫╰━╯┣━━┳╮╭┫┃╭━━┫┃┃┃┃┃┃┃┣╮┃
-┃╭━╮┃┃╱┃┃┃┃╱╭┫┃┃┃╭━┫╭╮┃━━┫╭━━┫╭╮┃┃┃┃┃┃╭╮┃┃┃┃┃┃┃┃┃┃┃
-┃╰━╯┃╰━╯┃┃╰━╯┃╰╯┃╰━┫╭╮┣━━┃┃╱╱┃╭╮┃╰╯┃╰┫╰╯┃╰━╯┃╰━╯┣╯╰╮
-╰━━━┻━╮╭╯╰━━━┻━━┻━━┻╯╰┻━━┻╯╱╱╰╯╰┻━━┻━┻━━┻━━━┻━━━┻━━╯
-╱╱╱╱╭━╯┃
-╱╱╱╱╰━━╯
-\n"
+fi
+
+
