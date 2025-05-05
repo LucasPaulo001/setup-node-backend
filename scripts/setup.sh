@@ -1,11 +1,5 @@
 #!/bin/bash
 
-#Caminhos absolutos
-SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
-
-#Caminho para a base do projeto
-BASE_DIR="$SCRIPT_DIR/base"
-
 #Criando estrutura
 bash <(curl -s https://raw.githubusercontent.com/LucasPaulo001/setup-node-backend/devShell_plusConfig/scripts/base/createStructure.sh)
 
