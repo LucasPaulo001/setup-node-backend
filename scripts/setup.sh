@@ -12,7 +12,7 @@ bash <(curl -s https://raw.githubusercontent.com/LucasPaulo001/setup-node-backen
 
    
 
-echo -e "\n--------Projeto base criado com sucesso!--------\n"
+echo -e "\n------PROJETO CRIADO!------\n"
 echo -e "\n 
 ╭━━╮╱╱╱╱╱╭╮╱╱╱╱╱╱╱╱╱╱╱╱╱╱╭━━━╮╱╱╱╱╱╭╮╱╱╱╭━━━┳━━━╮╭╮
 ┃╭╮┃╱╱╱╱╱┃┃╱╱╱╱╱╱╱╱╱╱╱╱╱╱┃╭━╮┃╱╱╱╱╱┃┃╱╱╱┃╭━╮┃╭━╮┣╯┃
