@@ -59,7 +59,13 @@ if [ "$engine_choice" = "1" ]; then
     mkdir -p views/{layouts,pages}
 
     echo -e "\n------ESTRUTURA MONTADA COM SUCESSO!------"
+    cd views/pages || exit
+    cat <<EOF > home.handlebars
+    <h1>Olá, Mundo!</h1>
+EOF
 
+cd ..
+cd ..
     cd views/layouts || exit
 cat << EOF > main.handlebars
 <!DOCTYPE html>
