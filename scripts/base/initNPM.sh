@@ -46,9 +46,9 @@ if [ -f "package.json" ]; then
 fi
 
 #Configuração de banco de dados
-echo -e "\nEscolha o banco de dados:\n"
+echo -e "\nEscolha o banco de dados:"
 echo "1) MongoDB"
-echo "2) Nenhum"
+echo -e "2) Nenhum\n"
 read -p "Escolha[1/2]: " db_choice
 
 cd src || exit
@@ -107,11 +107,14 @@ EOF
 
 #Configuração de banco de dados MongoDB
 if [ "$db_choice" = "1" ]; then
+    echo -e "\nInstalando dependências do MongoDB..."
 
     #Instalação de biblioteca
     npm i mongoose
 
 #Configuração do arquivo
+echo -e "\nConfigurando código base do Mongo, aguarde..."
+
 cd ../settings/database || exit
 cat << EOF > dbConnection.mjs
 //Config do banco de dados
@@ -197,10 +200,14 @@ EOF
 #Configuração de banco de dados MongoDB
 if [ "$db_choice" = "1" ]; then
 
+    echo -e "\nInstalando dependências do MongoDB..."
+
     #Instalação de biblioteca
     npm i mongoose
 
 #Configuração do arquivo
+echo -e "\nConfigurando código base do Mongo, aguarde..."
+
 cd ../settings/database || exit
 cat << EOF > dbConnection.js
 //Config do banco de dados

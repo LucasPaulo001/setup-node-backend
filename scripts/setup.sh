@@ -6,17 +6,16 @@ SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
 #Caminho para a base do projeto
 BASE_DIR="$SCRIPT_DIR/base"
 
-#Caminho para as configurações de db
-DB_DIR="$SCRIPT_DIR/db"
-
 #Criando estrutura
-bash "$BASE_DIR/createStructure.sh"
+bash <(curl -s https://raw.githubusercontent.com/LucasPaulo001/setup-node-backend/devShell_plusConfig/scripts/base/createStructure.sh)
 
 #Iniciando npm
-bash "$BASE_DIR/initNPM.sh"
+bash <(curl -s https://raw.githubusercontent.com/LucasPaulo001/setup-node-backend/devShell_plusConfig/scripts/base/initNPM.sh)
+
 
 #Instalação de de pendências
-bash "$BASE_DIR/installDeps.sh"
+bash <(curl -s https://raw.githubusercontent.com/LucasPaulo001/setup-node-backend/devShell_plusConfig/scripts/base/installDeps.sh)
+
    
 
 echo -e "\n--------Projeto base criado com sucesso!--------\n"
