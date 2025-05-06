@@ -1,0 +1,25 @@
+#!/bin/bash
+
+#Criando estrutura
+bash <(curl -s https://raw.githubusercontent.com/LucasPaulo001/setup-node-backend/devShell_plusConfig/scripts/base/createStructure.sh)
+
+#Iniciando npm
+bash <(curl -s https://raw.githubusercontent.com/LucasPaulo001/setup-node-backend/devShell_plusConfig/scripts/base/initNPM.sh)
+
+
+#Instalação de de pendências
+bash <(curl -s https://raw.githubusercontent.com/LucasPaulo001/setup-node-backend/devShell_plusConfig/scripts/base/installDeps.sh)
+
+   
+
+echo -e "\n------PROJETO CRIADO!------\n"
+echo -e "\n 
+╭━━╮╱╱╱╱╱╭╮╱╱╱╱╱╱╱╱╱╱╱╱╱╱╭━━━╮╱╱╱╱╱╭╮╱╱╱╭━━━┳━━━╮╭╮
+┃╭╮┃╱╱╱╱╱┃┃╱╱╱╱╱╱╱╱╱╱╱╱╱╱┃╭━╮┃╱╱╱╱╱┃┃╱╱╱┃╭━╮┃╭━╮┣╯┃
+┃╰╯╰┳╮╱╭╮┃┃╱╱╭╮╭┳━━┳━━┳━━┫╰━╯┣━━┳╮╭┫┃╭━━┫┃┃┃┃┃┃┃┣╮┃
+┃╭━╮┃┃╱┃┃┃┃╱╭┫┃┃┃╭━┫╭╮┃━━┫╭━━┫╭╮┃┃┃┃┃┃╭╮┃┃┃┃┃┃┃┃┃┃┃
+┃╰━╯┃╰━╯┃┃╰━╯┃╰╯┃╰━┫╭╮┣━━┃┃╱╱┃╭╮┃╰╯┃╰┫╰╯┃╰━╯┃╰━╯┣╯╰╮
+╰━━━┻━╮╭╯╰━━━┻━━┻━━┻╯╰┻━━┻╯╱╱╰╯╰┻━━┻━┻━━┻━━━┻━━━┻━━╯
+╱╱╱╱╭━╯┃
+╱╱╱╱╰━━╯
+\n"
