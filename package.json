@@ -1,0 +1,24 @@
+{
+  "name": "@_lucaspaul0_/setup-node-init",
+  "version": "1.0.2",
+  "description": "Schell script para inicialização de aplicação node base",
+  "main": "scripts/setup.sh",
+  "bin": {
+    "setup-node": "scripts/setup.sh"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/LucasPaulo001/setup-node-backend.git"
+  },
+  "keywords": [],
+  "author": "Lucas Paulo",
+  "license": "MIT",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/LucasPaulo001/setup-node-backend/issues"
+  },
+  "homepage": "https://github.com/LucasPaulo001/setup-node-backend#readme"
+}
