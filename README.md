@@ -1,24 +1,66 @@
-# Setup Backend
+# setup-node-init
 
-Este repositório contém um script de configuração automatizada para configurar rapidamente o ambiente de desenvolvimento de backend.
+> 🛠️ Script automatizado para inicializar rapidamente uma estrutura base de projeto Node.js.
 
-## Descrição
+Este pacote cria uma estrutura inicial para projetos backend com Node.js, incluindo criação de diretórios, inicialização do `package.json` e instalação de dependências padrão.
 
-O `setup.sh` configura o ambiente do backend, criando diretórios essenciais e arquivos de configuração, além de instalar as dependências necessárias para começar a desenvolver uma aplicação backend em Node.js.
+---
 
-## Funcionalidade
+## 📦 Instalação
 
-O script realiza as seguintes ações:
-- Cria diretórios e arquivos base para o projeto backend.
-- Gera o arquivo `.env` com variáveis padrão.
-- Configura o `package.json` de forma automática.
-- Instala dependências essenciais como `express`, `cors`, `dotenv` e `nodemon`.
+- Você pode executar diretamente com `npx` (não precisa instalar globalmente):
 
-## Como usar
-
-### Rode o seguinte comando no seu terminal bash
-``` 
- bash <(curl -s https://raw.githubusercontent.com/LucasPaulo001/setup-node-backend/refs/heads/devShell_plusConfig/scripts/setup.sh)
-
+```bash
+npx @_lucaspaul0_/setup-node-init
 
 ```
+---
+- Se preferir instalar globalmente:
+
+```bash
+npm install -g @_lucaspaul0_/setup-node-init
+setup-node
+
+```
+
+--- 
+### O que é criado:
+
+- 📁 src/
+- ├── 📁 controllers/
+- ├── 📁 models/
+- ├── 📁 routes/
+- ├── 📁 middlewares/
+- ├── 📁 views/ `(Caso escolha configurar)`
+- - ├── 📁 layouts/📄 main.handlebars
+- - ├── 📁 pages/📄 home.handlebars
+- ├── 📁 config/
+- └── app.js
+- 📄 package.json
+- 📄 .env
+- 📄 .gitignore
+
+---
+
+### Também instala automaticamente pacotes essenciais como:
+
+``express``
+``dotenv``
+``nodemon``
+``cors``
+``mongoose (opcional)``
+``entre outros``
+
+---
+
+### 🧠 Por que usar?
+- ✅ Evita trabalho repetitivo
+- ✅ Rápido e direto ao ponto
+- ✅ Ideal para prototipação ou projetos pequenos/médios
+- ✅ Configura view engines (caso escolha).
+
+---
+## 👨‍💻 Autor
+- > `Lucas Paulo`
+- > `GitHub: @LucasPaulo001`
+- > `Pacote NPM: @lucaspaul0/setup-node-init`
