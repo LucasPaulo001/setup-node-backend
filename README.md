@@ -18,6 +18,7 @@ O script realiza as seguintes ações:
 
 ### Rode o seguinte comando no seu terminal bash
 ``` 
-bash <(curl -s https://raw.githubusercontent.com/LucasPaulo001/setup-node-backend/refs/heads/main/setup.sh)
+ bash <(curl -s https://raw.githubusercontent.com/LucasPaulo001/setup-node-backend/refs/heads/devShell_plusConfig/scripts/setup.sh)
+
 
 ```
