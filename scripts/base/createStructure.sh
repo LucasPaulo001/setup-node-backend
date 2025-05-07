@@ -1,14 +1,23 @@
 #!/bin/bash
 
 #Estrutura de pastas
-mkdir -p backend/src/{routes,models,middlewares,controllers,settings/database}
+echo -e "Nome da pasta (ENTER para manter como API): " 
+read package
 
-cd backend || exit
+if [ "$package" = "" ]; then
+    package="API"
+    mkdir -p $package/src/{routes,models,middlewares,controllers,settings/database}
+
+else
+    mkdir -p $package/src/{routes,models,middlewares,controllers,settings/database}
+fi
+
+cd $package || exit
 
 # Configurando o .gitignore
 cat <<EOF > .gitignore
- node_modules
- .env
+node_modules
+.env
 EOF
 
 # Criando o .env

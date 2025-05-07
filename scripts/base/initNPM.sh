@@ -1,12 +1,11 @@
 #!/bin/bash
 
-mkdir -p backend/src/routes backend/src/settings/database
-cd backend || exit
+source ./createStructure.sh
 
 # Configuração do npm
 echo "Deseja rodar 'npm init' (interativo) ou 'npm init -y' (padrão)?"
 echo "1) npm init"
-echo "2) npm init -y"
+echo -e "2) npm init -y\n"
 read -p "Escolha [1/2]: " init_choice
 
 if [ "$init_choice" = "1" ]; then
@@ -19,7 +18,7 @@ fi
 if [ "$init_choice" = "1" ]; then
     echo "[Revisão de módulo]: Deseja o ESmodules (type: module) ou o CommonJs (padrão)?"
     echo "1) ESmodules"
-    echo "2) CommonJs"
+    echo -e "2) CommonJs\n"
     read -p "Escolha [1/2]: " module_choice
 
     if [ -f "package.json" ]; then
@@ -40,9 +39,9 @@ if [ "$init_choice" = "1" ]; then
 fi
 
 # Configuração de engine
-echo -e "Escolha a engine: "
+echo -e "\nEscolha a engine: "
 echo "1) Handlebars"
-echo "2) Nenhuma"
+echo -e "2) Nenhuma\n"
 read -p "Escolha [1/2]: " engine_choice
 
 if [ "$engine_choice" = "1" ]; then
@@ -246,3 +245,16 @@ EOF
         echo -e "\nNenhum banco adicionado..."
     fi
 fi
+
+#Iniciando servidor e acessando a página
+if [ "$module_choice" = "1" ]; then
+node app.mjs &
+
+else 
+node app.js &
+
+fi
+
+sleep 2
+
+start http://localhost:8080/
