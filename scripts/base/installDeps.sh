@@ -1,8 +1,8 @@
 #!/bin/bash
 
 source ./createStructure.sh
+ls
 
-cd $package || exit
 echo "Instalando dependências base..."
 npm install express dotenv cors
 npm install nodemon --save-dev

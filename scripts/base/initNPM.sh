@@ -246,12 +246,14 @@ EOF
     fi
 fi
 
+cd $package
+
 #Iniciando servidor e acessando a página
 if [ "$module_choice" = "1" ]; then
-node app.mjs &
+node src/app.mjs &
 
 else 
-node app.js &
+node src/app.js &
 
 fi
 

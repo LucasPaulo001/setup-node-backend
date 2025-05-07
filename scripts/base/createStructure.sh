@@ -11,7 +11,7 @@ if [ "$package" = "" ]; then
 else
     mkdir -p $package/src/{routes,models,middlewares,controllers,settings/database}
 fi
-
+export package
 cd $package || exit
 
 # Configurando o .gitignore
