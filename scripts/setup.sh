@@ -1,12 +1,18 @@
 #!/bin/bash
 
+RESET="\033[0m"
+
+RED="\033[0;32m"
+GREEN="\033[0;32m"
+
+
 
 #Iniciando npm
 bash <(curl -s https://raw.githubusercontent.com/LucasPaulo001/setup-node-backend/devShell_plusConfig/scripts/base/initNPM.sh)
 
    
 
-echo -e "\n------PROJETO CRIADO!------\n"
+echo -e "\n${GREEN}------PROJETO CRIADO!------${RESET}\n"
 echo -e "\n 
 ╭━━╮╱╱╱╱╱╭╮╱╱╱╱╱╱╱╱╱╱╱╱╱╱╭━━━╮╱╱╱╱╱╭╮╱╱╱╭━━━┳━━━╮╭╮
 ┃╭╮┃╱╱╱╱╱┃┃╱╱╱╱╱╱╱╱╱╱╱╱╱╱┃╭━╮┃╱╱╱╱╱┃┃╱╱╱┃╭━╮┃╭━╮┣╯┃
