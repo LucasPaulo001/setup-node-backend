@@ -1,6 +1,31 @@
 #!/bin/bash
 
-source ./createStructure.sh
+#Estrutura de pastas
+echo -e "Nome da pasta (ENTER para manter como API): " 
+read package
+
+if [ "$package" = "" ]; then
+    package="API"
+    mkdir -p "$package"/src/{routes,models,middlewares,controllers,settings/database}
+
+else
+    mkdir -p "$package"/src/{routes,models,middlewares,controllers,settings/database}
+fi
+
+cd $package || exit
+
+# Configurando o .gitignore
+cat <<EOF > .gitignore
+node_modules
+.env
+EOF
+
+# Criando o .env
+cat <<EOF > .env
+PORT=8080
+EOF
+
+ls
 
 # Configuração do npm
 echo "Deseja rodar 'npm init' (interativo) ou 'npm init -y' (padrão)?"
@@ -246,11 +271,17 @@ EOF
     fi
 fi
 
-cd $package
+
+echo "Instalando dependências base..."
+npm install express dotenv cors
+npm install nodemon --save-dev
+
+ls
+cd ..
 
 #Iniciando servidor e acessando a página
 if [ "$module_choice" = "1" ]; then
-node src/app.mjs &
+node src/app.mjs & 
 
 else 
 node src/app.js &
@@ -259,4 +290,14 @@ fi
 
 sleep 2
 
-start http://localhost:8080/
+# Abrir navegador de forma multiplataforma
+
+if [[ "$OSTYPE" == "linux-gnu"* ]]; then
+    xdg-open http://localhost:8080/
+elif [[ "$OSTYPE" == "darwin"* ]]; then
+    open http://localhost:8080/
+elif [[ "$OSTYPE" == "msys" ]] || [[ "$OSTYPE" == "win32" ]]; then
+    start http://localhost:8080/
+fi
+
+wait
