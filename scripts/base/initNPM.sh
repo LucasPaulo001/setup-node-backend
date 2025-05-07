@@ -115,7 +115,15 @@ EOF
 
 # Criando o .env
 cat <<EOF > .env
+#Servidor
 PORT=8080
+
+#Banco de dados (Informe seus dados do banco)
+DB_HOST=localhost
+DB_USER=root
+DB_PASSWORD=
+DB_NAME=nome_do_banco
+DB_PORT=3306
 EOF
 
 ls
@@ -197,7 +205,9 @@ fi
 # Configuração de banco de dados
 echo -e "\nEscolha o banco de dados:"
 echo "1) MongoDB"
-echo -e "2) Nenhum\n"
+echo "2) MySQL"
+echo "3) PostgreSQL"
+echo -e "4) Nenhum\n"
 read -p "Escolha [1/2]: " db_choice
 
 if [ "$init_choice" = "1" ] && [ "$module_choice" = "1" ]; then
@@ -280,8 +290,11 @@ router.get('/', (req, res) => {
 export default router;
 EOF
 
+#Configuração de bando de dados
     if [ "$db_choice" = "1" ]; then
         echo -e "\n${YELLOW}Instalando dependências do MongoDB...${RESET}"
+
+        #Instalando dependências
         npm i mongoose
 
         echo -e "\n${YELLOW}Configurando código base do Mongo...${RESET}"
@@ -303,6 +316,82 @@ EOF
         sed -i '/dotenv.config();/a\
 \n// Configuração de banco de dados\nimport connectToDatabase from "./settings/database/dbConnection.mjs";\nconnectToDatabase(app);' app.mjs
         echo -e "\n${GREEN}------CONFIGURAÇÃO FINALIZADA------${RESET}"
+
+    #MySQL
+    elif [ "$db_choice" = "2" ]; then
+        echo -e "\n${YELLOW}Instalando dependências do MySQL...${RESET}"
+
+        #Instalando dependências
+        npm install mysql2
+
+        echo -e "\n${YELLOW}Configurando código base do mysql2...${RESET}"
+        echo -e "\n\n${YELLOW}⚠️ Certifique-se de que o servidor MySQL está em execução antes de continuar.${RESET}"
+        echo -e "\n\n${YELLOW}➡️  Preencha os dados de conexão no arquivo .env antes de rodar a aplicação.${RESET}"
+        cat << EOF > settings/database/dbConnection.mjs
+import mysql from 'mysql2/promise';
+import dotenv from 'dotenv'
+dotenv.config()
+
+const pool = mysql.createPool({
+  host: process.env.DB_HOST,
+  user: process.env.DB_USER,
+  password: process.env.DB_PASSWORD,
+  database: process.env.DB_NAME,
+  waitForConnections: true,
+  connectionLimit: 10,
+  queueLimit: 0
+});
+
+export default pool;
+EOF
+
+#Inserindo no arquivo de servidor
+
+sed -i '/dotenv.config();/a \
+\n// Configuração de banco de dados\nimport pool from "./settings/database/dbConnection.mjs";\n\
+pool.query("SELECT * FROM usuarios")\n\
+  .then(([rows]) => console.log(rows))\n\
+  .catch(err => console.error(err));\n' app.mjs
+
+        echo -e "\n${GREEN}------CONFIGURAÇÃO FINALIZADA------${RESET}"
+
+    elif [ "$db_choice" =  "3" ]; then
+ echo -e "\n${YELLOW}Instalando dependências do PostgreSQL...${RESET}"
+
+        #Instalando dependências
+        npm install pg
+
+        echo -e "\n${YELLOW}Configurando código base do pg...${RESET}"
+        echo -e "\n\n${YELLOW}➡️  Preencha os dados de conexão no arquivo .env com os dados do banco de dados.${RESET}"
+        cat << EOF > settings/database/dbConnection.mjs
+import pkg from 'pg';
+const { Pool } = pkg;
+import dotenv from 'dotenv';
+dotenv.config();
+
+const pool = new Pool({
+  user: process.env.DB_USER || 'seu_usuario',
+  host: process.env.DB_HOST || 'localhost',
+  database: process.env.DB_NAME || 'seu_banco',
+  password: process.env.DB_PASSWORD || 'sua_senha',
+  port: process.env.DB_PORT || 5432,
+});
+
+export default pool;
+
+EOF
+
+sed -i '/dotenv.config();/a \
+\
+// Configuração de banco de dados\nimport pool from "./settings/database/dbConnection.mjs";\n\
+pool.query("SELECT NOW()")\n\
+  .then(res => {\n\
+    console.log("Conectado ao PostgreSQL:", res.rows[0]);\n\
+  })\n\
+  .catch(err => {\n\
+    console.error("Erro ao conectar no PostgreSQL:", err);\n\
+  });' app.mjs
+
     else
         echo -e "\nNenhum banco adicionado..."
     fi
@@ -390,6 +479,78 @@ EOF
         sed -i '/dotenv.config();/a\
 \n// Configuração de banco de dados\nconst connectToDatabase = require("./settings/database/dbConnection.js");\nconnectToDatabase(app);' app.js
         echo -e "\n${GREEN}------CONFIGURAÇÃO FINALIZADA------${RESET}"
+    
+    #MySQL
+    elif [ "$db_choice" = "2" ]; then
+        echo -e "\n${YELLOW}Instalando dependências do MySQL...${RESET}"
+
+        #Instalando dependências
+        npm install mysql2
+
+        echo -e "\n${YELLOW}Configurando código base do mysql2...${RESET}"
+        echo -e "\n\n${YELLOW}⚠️ Certifique-se de que o servidor MySQL está em execução antes de continuar.${RESET}"
+        echo -e "\n\n${YELLOW}➡️  Preencha os dados de conexão no arquivo .env antes de rodar a aplicação.${RESET}"
+        cat << EOF > settings/database/dbConnection.js
+const mysql = require('mysql2/promise');
+require('dotenv').config();
+
+const pool = mysql.createPool({
+  host: process.env.DB_HOST,
+  user: process.env.DB_USER,
+  password: process.env.DB_PASSWORD,
+  database: process.env.DB_NAME,
+  waitForConnections: true,
+  connectionLimit: 10,
+  queueLimit: 0
+});
+
+module.exports = pool;
+
+EOF
+
+sed -i '/dotenv.config();/a \
+\n// Configuração de banco de dados\nconst pool = require("./settings/database/dbConnection.js");\n\
+pool.query("SELECT * FROM usuarios")\n\
+  .then(([rows]) => console.log(rows))\n\
+  .catch(err => console.error(err));\n' app.js
+
+    elif [ "$db_choice" =  "3" ]; then
+ echo -e "\n${YELLOW}Instalando dependências do PostgreSQL...${RESET}"
+
+        #Instalando dependências
+        npm install pg
+
+        echo -e "\n${YELLOW}Configurando código base do pg...${RESET}"
+        echo -e "\n\n${YELLOW}➡️  Preencha os dados de conexão no arquivo .env com os dados do banco de dados.${RESET}"
+        cat << EOF > settings/database/dbConnection.js
+const pkg = require('pg') ;
+const { Pool } = pkg;
+require('dotenv').config();
+
+const pool = new Pool({
+  user: process.env.DB_USER || 'seu_usuario',
+  host: process.env.DB_HOST || 'localhost',
+  database: process.env.DB_NAME || 'seu_banco',
+  password: process.env.DB_PASSWORD || 'sua_senha',
+  port: process.env.DB_PORT || 5432,
+});
+
+module.exports = pool
+
+EOF
+
+sed -i '/dotenv.config();/a \
+\
+// Configuração de banco de dados\nconst pool = require("./settings/database/dbConnection.js");\n\
+pool.query("SELECT NOW()")\n\
+  .then(res => {\n\
+    console.log("Conectado ao PostgreSQL:", res.rows[0]);\n\
+  })\n\
+  .catch(err => {\n\
+    console.error("Erro ao conectar no PostgreSQL:", err);\n\
+  });' app.js
+
+
     else
         echo -e "\nNenhum banco adicionado..."
     fi
@@ -425,5 +586,17 @@ elif [[ "$OSTYPE" == "msys" ]] || [[ "$OSTYPE" == "cygwin" ]]; then
 else
     echo "Sistema operacional não suportado para abrir o navegador automaticamente."
 fi
+
+echo -e "\n${GREEN}------PROJETO CRIADO!------${RESET}\n"
+echo -e "\n 
+╭━━╮╱╱╱╱╱╭╮╱╱╱╱╱╱╱╱╱╱╱╱╱╱╭━━━╮╱╱╱╱╱╭╮╱╱╱╭━━━┳━━━╮╭╮
+┃╭╮┃╱╱╱╱╱┃┃╱╱╱╱╱╱╱╱╱╱╱╱╱╱┃╭━╮┃╱╱╱╱╱┃┃╱╱╱┃╭━╮┃╭━╮┣╯┃
+┃╰╯╰┳╮╱╭╮┃┃╱╱╭╮╭┳━━┳━━┳━━┫╰━╯┣━━┳╮╭┫┃╭━━┫┃┃┃┃┃┃┃┣╮┃
+┃╭━╮┃┃╱┃┃┃┃╱╭┫┃┃┃╭━┫╭╮┃━━┫╭━━┫╭╮┃┃┃┃┃┃╭╮┃┃┃┃┃┃┃┃┃┃┃
+┃╰━╯┃╰━╯┃┃╰━╯┃╰╯┃╰━┫╭╮┣━━┃┃╱╱┃╭╮┃╰╯┃╰┫╰╯┃╰━╯┃╰━╯┣╯╰╮
+╰━━━┻━╮╭╯╰━━━┻━━┻━━┻╯╰┻━━┻╯╱╱╰╯╰┻━━┻━┻━━┻━━━┻━━━┻━━╯
+╱╱╱╱╭━╯┃
+╱╱╱╱╰━━╯
+\n"
 
 wait
