@@ -25,31 +25,35 @@ setup-node
 
 --- 
 ### O que é criado:
-
-- 📁 src/
+- 📁 API (ou o nome que o usuário escolher)/
+- ├── 📁 public/
+- - ├── 📁 pages/📄 setup.html
+- - ├── 📁 styles/📄 style.css
+- ├── 📁 src/
 - ├── 📁 controllers/
 - ├── 📁 models/
-- ├── 📁 routes/
+- ├── 📁 routes/📄 Router.js
 - ├── 📁 middlewares/
 - ├── 📁 views/ `(Caso escolha configurar)`
 - - ├── 📁 layouts/📄 main.handlebars
 - - ├── 📁 pages/📄 home.handlebars
 - ├── 📁 config/
-- └── app.js
+- - ├── 📁 dbConnection/📄 dbConnection.js (Configuração inicial de banco de dados (MongoDB))
+- └── app.js (Servidor configurado)
 - 📄 package.json
 - 📄 .env
-- 📄 .gitignore
+- 📄 .gitignore (node_modules, .env)
 
 ---
 
 ### Também instala automaticamente pacotes essenciais como:
 
-``express``
-``dotenv``
-``nodemon``
-``cors``
-``mongoose (opcional)``
-``entre outros``
+- ``express``
+- ``dotenv``
+- ``nodemon``
+- ``cors``
+- ``mongoose (opcional)``
+- ``entre outros``
 
 ---
 
@@ -63,4 +67,4 @@ setup-node
 ## 👨‍💻 Autor
 - > `Lucas Paulo`
 - > `GitHub: @LucasPaulo001`
-- > `Pacote NPM: @lucaspaul0/setup-node-init`
+### Pacote NPM: [@lucaspaul0/setup-node-init](https://www.npmjs.com/package/@_lucaspaul0_/setup-node-init)
