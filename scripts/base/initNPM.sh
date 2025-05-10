@@ -126,8 +126,6 @@ DB_NAME=nome_do_banco
 DB_PORT=3306
 EOF
 
-ls
-
 # Configuração do npm
 echo "Deseja rodar 'npm init' (interativo) ou 'npm init -y' (padrão)?"
 echo "1) npm init"
@@ -561,7 +559,6 @@ echo -e "${YELLOW}Instalando dependências base...${RESET}"
 npm install express dotenv cors
 npm install nodemon --save-dev
 
-ls
 cd ..
 
 #Iniciando servidor e acessando a página
