@@ -165,7 +165,7 @@ if [ "$init_choice" = "1" ]; then
 fi
 
 # Configuração de engine
-echo -e "\nEscolha a engine: "
+echo -e "Escolha a engine: "
 echo "1) Handlebars"
 echo -e "2) Nenhuma\n"
 read -p "Escolha [1/2]: " engine_choice
@@ -208,7 +208,7 @@ echo "1) MongoDB"
 echo "2) MySQL"
 echo "3) PostgreSQL"
 echo -e "4) Nenhum\n"
-read -p "Escolha [1/2]: " db_choice
+read -p "Escolha [1/2/3/4]: " db_choice
 
 if [ "$init_choice" = "1" ] && [ "$module_choice" = "1" ]; then
 cd src || exit
