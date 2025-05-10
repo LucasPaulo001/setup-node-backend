@@ -173,7 +173,7 @@ read -p "Escolha [1/2]: " engine_choice
 if [ "$engine_choice" = "1" ]; then
     echo -e "\n${YELLOW}Montando estrutura da Engine...${RESET}"
     cd src || exit
-    mkdir -p views/{layouts,pages}
+    mkdir -p views/{layouts,pages,partials}
 
     echo -e "\n${GREEN}------ESTRUTURA MONTADA COM SUCESSO!------${RESET}"
     cat <<EOF > views/pages/home.handlebars
