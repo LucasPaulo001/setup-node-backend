@@ -1,6 +1,6 @@
 {
   "name": "@_lucaspaul0_/setup-node-init",
-  "version": "1.0.5",
+  "version": "1.0.7",
   "description": "Schell script para inicialização de aplicação node base",
   "main": "scripts/setup.sh",
   "bin": {

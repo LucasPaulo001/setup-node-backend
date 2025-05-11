@@ -2,26 +2,46 @@
 
 RESET="\033[0m"
 
-RED="\033[0;32m"
+RED="\033[0;31m"
 GREEN="\033[0;32m"
 YELLOW='\033[0;33m'
 
 #Estrutura de pastas
-echo -e "Nome da pasta (ENTER para manter como API): " 
+echo "Nome da pasta (ENTER para manter como API): " 
 read package
 
 if [ "$package" = "" ]; then
     package="API"
 
-    mkdir -p "$package"/public/{pages,styles} "$package"/src/{routes,models,middlewares,controllers} "$package"/src/settings/database
+    mkdir -p "$package"/public/{pages,styles} \
+    "$package"/src/{routes,models,middlewares,controllers} \
+    "$package"/src/settings/database
 
 else
     mkdir -p "$package"/public/{pages,styles} "$package"/src/{routes,models,middlewares,controllers} "$package"/src/settings/database
 
 fi
 
+cd $package
+
+cat <<EOF > README.md
+# 🚀 Setup-Node
+
+Este é o ponto de partida para um projeto backend em Node.js com Express.
+
+## 🧰 Tecnologias utilizadas
+
+- Node.js
+- Express
+- Dotenv
+- CORS
+- Nodemon (desenvolvimento)
+
+EOF
+
+
 #Criando html na pasta public/pages
-cd $package/public/pages || exit
+cd public/pages || exit
 
 cat <<EOF > setup.html 
 <!DOCTYPE html>
@@ -559,7 +579,15 @@ echo -e "${YELLOW}Instalando dependências base...${RESET}"
 npm install express dotenv cors
 npm install nodemon --save-dev
 
+ls
+
 cd ..
+cd ..
+bash ./versioning.sh
+ls
+
+cd "$package"
+
 
 #Iniciando servidor e acessando a página
 if [ "$module_choice" = "1" ]; then

@@ -8,20 +8,19 @@ Este pacote cria uma estrutura inicial para projetos backend com Node.js, inclui
 
 ## 📦 Instalação
 
-- Você pode executar diretamente com `npx` (não precisa instalar globalmente):
-
-```bash
-npx @_lucaspaul0_/setup-node-init
-
-```
----
-- Se preferir instalar globalmente:
+- Intale o pacote globalmente:
 
 ```bash
 npm install -g @_lucaspaul0_/setup-node-init
 setup-node
 
 ```
+
+- OBS: 
+
+ `` Para subir o projeto para o GitHub a partir do pacote, esteja autenticado no gh Auth (Utilize o comando "gh auth login" no terminal e siga os passos) ``
+
+ - - GitHub.com ->  HTTPS -> Fazer login via navegador
 
 --- 
 ### O que é criado:
