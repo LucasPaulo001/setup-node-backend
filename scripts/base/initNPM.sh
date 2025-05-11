@@ -580,6 +580,8 @@ echo -e "${YELLOW}Instalando dependências base...${RESET}"
 npm install express dotenv cors
 npm install nodemon --save-dev
 
+cd ..
+cd ..
 echo -e "\n${CYAN}Deseja subir o projeto para um repositório do GitHub?${RESET} ${YELLOW}*Esteja autenticado no gh auth para prosseguir!${RESET}\n" 
 echo "[1]: Sim"
 echo -e "[2]: Não\n"
@@ -603,7 +605,7 @@ git commit -m "first commit"
 echo -e "${CYAN}Nome do repositório no GitHub: ${RESET}" 
 read repo_name
 
-echo "${CYAN}Deseja que o repositório seja público ou privado?${RESET}\n"
+echo -e "${CYAN}Deseja que o repositório seja público ou privado?${RESET}\n"
 echo "[1]: Público"
 echo -e "[2]: Privado\n"
 echo "Escolha [1/2]"
